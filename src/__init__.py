@@ -1,8 +1,8 @@
 ﻿# Lenscribe - Computer Vision and Vision-Language Processing
 
 __version__ = "0.1.0"
-__author__ = "Your Name"
-__email__ = "your.email@example.com"
+__author__ = "Mayas Phool"
+__email__ = "mayasphool@gmail.com"
 
 from .models.vgg16_classifier import VGG16Classifier
 from .models.blip_processor import BLIPProcessor

@@ -17,12 +17,12 @@ class BLIPProcessor:
             model_name (str): Hugging Face model name for BLIP
         """
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.processor = BlipProcessor.from_pretrained(model_name)
+        self.processor = BlipProcessor.from_pretrained(model_name, use_fast=True)
         self.model = BlipForConditionalGeneration.from_pretrained(model_name).to(self.device)
         
         # Initialize QA model separately
         self.qa_model = BlipForQuestionAnswering.from_pretrained("Salesforce/blip-vqa-base").to(self.device)
-        self.qa_processor = BlipProcessor.from_pretrained("Salesforce/blip-vqa-base")
+        self.qa_processor = BlipProcessor.from_pretrained("Salesforce/blip-vqa-base", use_fast=True)
     
     def generate_caption(self, image_path, max_length=50, num_beams=5):
         """

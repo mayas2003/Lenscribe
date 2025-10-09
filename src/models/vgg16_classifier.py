@@ -33,6 +33,8 @@ class VGG16Classifier:
             numpy.ndarray: Preprocessed image array
         """
         img = Image.open(image_path)
+        # Convert to RGB to ensure 3 channels (remove alpha channel if present)
+        img = img.convert('RGB')
         img = img.resize(self.input_size)
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
