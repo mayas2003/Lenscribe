@@ -6,10 +6,13 @@ __email__ = "mayasphool@gmail.com"
 
 from .models.vgg16_classifier import VGG16Classifier
 from .models.blip_processor import BLIPProcessor
+from .models.voice_processor import VoiceProcessor, VoiceTrainer
 from .utils.image_processor import ImageProcessor
 
 __all__ = [
     "VGG16Classifier",
     "BLIPProcessor", 
+    "VoiceProcessor",
+    "VoiceTrainer",
     "ImageProcessor"
 ]
