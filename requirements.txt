@@ -36,6 +36,19 @@ pytest>=7.4.0
 black>=23.0.0
 flake8>=6.0.0
 
+# Voice Processing and TTS
+TTS>=0.22.0
+torchaudio>=2.0.0
+librosa>=0.10.0
+soundfile>=0.12.0
+speechrecognition>=3.10.0
+pydub>=0.25.0
+
+# Voice Emotion and Tone Control
+emotion>=0.0.1
+pyaudio>=0.2.11
+webrtcvad>=2.0.10
+
 # Optional: For advanced features
 accelerate>=0.20.0
 bitsandbytes>=0.39.0
