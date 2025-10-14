@@ -4,10 +4,11 @@ A Python project for computer vision and vision-language tasks using VGG16 and B
 
 ## Overview
 
-Lenscribe is designed to work with pre-trained models for various computer vision and vision-language understanding tasks. The project leverages:
+Lenscribe is designed to work with pre-trained models for various computer vision, vision-language understanding, and voice synthesis tasks. The project leverages:
 
 - **VGG16**: A deep convolutional neural network for image classification and feature extraction
 - **BLIP**: Bootstrapping Language-Image Pre-training for vision-language understanding tasks
+- **XTTS-v2**: Advanced text-to-speech with emotion control and voice cloning capabilities
 
 ## Project Structure
 
@@ -30,6 +31,9 @@ Lenscribe/
 
 - **VGG16 Integration**: Pre-trained VGG16 model for image classification and feature extraction
 - **BLIP Integration**: Vision-language model for image captioning, visual question answering, and more
+- **Voice Synthesis**: Advanced text-to-speech with emotion control and voice cloning
+- **Emotion Control**: Generate speech with different emotions (happy, sad, angry, etc.)
+- **Voice Cloning**: Clone voices from reference audio with emotion control
 - **Modular Design**: Clean, organized code structure for easy extension
 - **Comprehensive Testing**: Unit tests for all major components
 - **Documentation**: Detailed documentation and examples
@@ -83,6 +87,30 @@ print(caption)
 # Answer questions about an image
 answer = processor.answer_question('path/to/image.jpg', 'What is in this image?')
 print(answer)
+`
+
+### Voice Synthesis with Emotion Control
+
+`python
+from src.models.voice_processor import VoiceProcessor
+
+# Initialize voice processor
+voice = VoiceProcessor()
+
+# Synthesize speech with emotion
+voice.synthesize_with_emotion(
+    text="Hello, this is a happy voice!",
+    emotion="happy",
+    output_path="happy_voice.wav"
+)
+
+# Clone voice with emotion
+voice.clone_voice_with_emotion(
+    text="This is my cloned voice.",
+    reference_audio="path/to/reference.wav",
+    emotion="sad",
+    output_path="cloned_sad_voice.wav"
+)
 `
 
 ## Development
