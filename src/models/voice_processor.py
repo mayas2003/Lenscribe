@@ -31,7 +31,14 @@ try:
     TTS_AVAILABLE = True
 except ImportError:
     TTS_AVAILABLE = False
-    print("Warning: TTS library not available. Install with: pip install TTS")
+    print("Warning: TTS library not available. Using alternative voice processor.")
+    # Import alternative voice processor
+    try:
+        from .voice_processor_alternative import AlternativeVoiceProcessor
+        ALTERNATIVE_AVAILABLE = True
+    except ImportError:
+        ALTERNATIVE_AVAILABLE = False
+        print("Warning: Alternative voice processor not available.")
 
 # Configure logging
 logging.basicConfig(
@@ -65,7 +72,12 @@ class VoiceProcessor:
             seed: Random seed for reproducibility
         """
         if not TTS_AVAILABLE:
-            raise ImportError("TTS library not available. Install with: pip install TTS")
+            if ALTERNATIVE_AVAILABLE:
+                # Use alternative voice processor
+                logger.info("Using alternative voice processor (TTS not available)")
+                return AlternativeVoiceProcessor.__init__(self, seed=seed)
+            else:
+                raise ImportError("TTS library not available. Install with: pip install TTS")
             
         # Auto-detect device if not specified
         if device is None:
