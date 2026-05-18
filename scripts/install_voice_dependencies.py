@@ -102,9 +102,9 @@ def install_voice_dependencies():
     if core_success:
         print("\n[SUCCESS] Voice processing is ready to use!")
         print("\nNext steps:")
-        print("1. Run: python examples/voice_example.py")
-        print("2. Check: docs/voice_integration_guide.md")
-        print("3. Test: python tests/test_voice_processor.py")
+        print("1. Run: python app.py")
+        print("2. Run: python examples/describe_and_speak.py")
+        print("3. Test: pytest tests/ -m \"not slow\"")
     else:
         print("\n[ERROR] Some core dependencies failed to install.")
         print("Please check the error messages above and try again.")

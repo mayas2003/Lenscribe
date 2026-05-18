@@ -163,24 +163,11 @@ class AdvancedVoiceProcessor:
         if not EDGE_TTS_AVAILABLE:
             raise ImportError("Edge TTS not available")
         
-        # Select voice based on emotion
         voices = self.edge_voices.get(emotion, self.edge_voices["neutral"])
         voice = random.choice(voices)
-        
-        # Create SSML with emotion control
-        style = self.emotion_styles.get(emotion, "friendly")
-        ssml = f"""
-        <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="{language}">
-            <voice name="{voice}">
-                <mstts:express-as style="{style}" styledegree="{emotion_strength}">
-                    {text}
-                </mstts:express-as>
-            </voice>
-        </speak>
-        """
-        
-        # Generate audio
-        communicate = edge_tts.Communicate(ssml, voice)
+
+        # Plain text + voice pick is more reliable across edge-tts versions than custom SSML
+        communicate = edge_tts.Communicate(text, voice)
         
         if output_path:
             await communicate.save(output_path)

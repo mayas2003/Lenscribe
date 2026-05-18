@@ -31,14 +31,13 @@ try:
     TTS_AVAILABLE = True
 except ImportError:
     TTS_AVAILABLE = False
-    print("Warning: TTS library not available. Using alternative voice processor.")
-    # Import alternative voice processor
     try:
-        from .voice_processor_alternative import AlternativeVoiceProcessor
+        from .advanced_voice_processor import AdvancedVoiceProcessor as _FallbackVoice
+
         ALTERNATIVE_AVAILABLE = True
     except ImportError:
+        _FallbackVoice = None  # type: ignore
         ALTERNATIVE_AVAILABLE = False
-        print("Warning: Alternative voice processor not available.")
 
 # Configure logging
 logging.basicConfig(
@@ -73,11 +72,13 @@ class VoiceProcessor:
         """
         if not TTS_AVAILABLE:
             if ALTERNATIVE_AVAILABLE:
-                # Use alternative voice processor
-                logger.info("Using alternative voice processor (TTS not available)")
-                return AlternativeVoiceProcessor.__init__(self, seed=seed)
-            else:
-                raise ImportError("TTS library not available. Install with: pip install TTS")
+                logger.info("Coqui TTS not installed; using Edge TTS fallback")
+                self._is_fallback = True
+                self._fallback = _FallbackVoice(seed=seed)
+                return
+            raise ImportError(
+                "No TTS backend available. Install demo deps: pip install edge-tts"
+            )
             
         # Auto-detect device if not specified
         if device is None:
@@ -107,8 +108,16 @@ class VoiceProcessor:
 
         logger.info("Voice processor loaded. Device: %s. FP16: %s", self.device, self.use_fp16)
 
+    def __getattr__(self, name: str):
+        if self.__dict__.get("_is_fallback"):
+            return getattr(self._fallback, name)
+        raise AttributeError(name)
+
     def set_seed(self, seed: int) -> None:
         """Set random seeds for reproducibility."""
+        if self.__dict__.get("_is_fallback"):
+            self._fallback.set_seed(seed)
+            return
         logger.info("Setting seed = %d", seed)
         random.seed(seed)
         try:

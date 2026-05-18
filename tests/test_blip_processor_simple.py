@@ -12,6 +12,7 @@ import pytest
 import torch
 import tempfile
 import os
+from unittest.mock import Mock, patch
 from PIL import Image
 import sys
 from pathlib import Path

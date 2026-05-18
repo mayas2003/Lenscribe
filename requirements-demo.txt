@@ -1,0 +1,20 @@
+# Portfolio demo — lighter install than full requirements.txt
+#   pip install -r requirements-demo.txt
+#   python examples/assets/create_sample.py
+#   python app.py
+
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+accelerate>=0.20.0
+Pillow>=10.0.0
+numpy>=1.24.0
+gradio>=4.0.0
+edge-tts>=6.1.0
+soundfile>=0.12.0
+
+# Optional: VGG16 classification panel in the UI
+# tensorflow>=2.13.0
+
+# Optional: full Coqui XTTS voice cloning (heavy; Python <=3.11)
+# TTS>=0.22.0
